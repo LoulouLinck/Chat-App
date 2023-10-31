@@ -14,6 +14,12 @@ const ChatScreen = ({ route, navigation }) => {
     setMessages([
       {
         _id: 1,
+        text: 'You\'ve entered the Chat Room',
+        createdAt: new Date(),
+        system: true,
+      },
+      {
+        _id: 2,
         text: "Hello developer",
         createdAt: new Date(),
         user: {
@@ -21,12 +27,6 @@ const ChatScreen = ({ route, navigation }) => {
           name: "React Native",
           avatar: "https://placeimg.com/140/140/any",
         },
-      },
-      {
-        _id: 2,
-        text: 'This is a system message',
-        createdAt: new Date(),
-        system: true,
       },
     ]);
   }, []);
