@@ -5,12 +5,17 @@ import { GiftedChat } from "react-native-gifted-chat";
 const ChatScreen = ({ route, navigation }) => {
     const username = route.params.name;
     const color = route.params.color;
+    // messages state initialization
     const [messages, setMessages] = useState([]);
+    // setter function setMessage() accepts callback function which 1st parameter: previousMessages = variable refers to latest value of state
+    //appends the new msg to newMessages array: to original list of msg from previousMessages. Gets displayed in chat.
     const onSend = (newMessages) => {
       setMessages(previousMessages => GiftedChat.append(previousMessages, newMessages))
     }
 
-   useEffect(() => {
+    // State initialization
+   useEffect(() => { 
+    // Msg w/ Gifted Chat follow format: ID, creation date, user object. User object requires: user ID, name, avatar.
     setMessages([
       {
         _id: 1,
