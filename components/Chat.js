@@ -37,13 +37,12 @@ const ChatScreen = ({ route, navigation }) => {
  return (
    <View style={[styles.container, {backgroundColor: color}]}>
      <Text>Hello {username} !</Text>
-     <View>
+     <View style={styles.container}>
         <GiftedChat
           messages={messages}
           onSend={messages => onSend(messages)}
           user={{
             _id: 1
-            { Platform.OS === 'android' ? <KeyboardAvoidingView behavior="height" /> : null }
           }}
         />
     </View>
