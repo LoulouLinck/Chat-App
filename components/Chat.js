@@ -31,6 +31,24 @@ const ChatScreen = ({ route, navigation }) => {
     ]);
   }, []);
 
+// setter function setMessage() accepts callback function which 1st parameter: previousMessages = variable refers to latest value of state
+    //appends the new msg to newMessages array: to original list of msg from previousMessages. Gets displayed in chat.
+    const onSend = (newMessages) => {
+      setMessages(previousMessages => GiftedChat.append(previousMessages, newMessages))
+    }
+    const renderBubble = (props) => {
+      return <Bubble
+        {...props}
+        wrapperStyle={{
+          right: {
+            backgroundColor: "#000"
+          },
+          left: {
+            backgroundColor: "#FFF"
+          }
+        }}
+      />
+    }
 
  return (
    <View style={[styles.container, {backgroundColor: color}]}>
@@ -39,6 +57,7 @@ const ChatScreen = ({ route, navigation }) => {
      <View style={styles.container}>
         <GiftedChat
           messages={messages}
+          renderBubble={renderBubble}
           onSend={messages => onSend(messages)}
           user={{
             _id: 1
