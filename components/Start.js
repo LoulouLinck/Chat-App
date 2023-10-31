@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { StyleSheet, View, Text, TextInput, TouchableOpacity, ImageBackground } from 'react-native';
+import { StyleSheet, View, Text, TextInput, TouchableOpacity, ImageBackground, KeyboardAvoidingView, Platform } from 'react-native';
 
 const StartScreen = ({ navigation }) => {
      const [username, setUsername] = useState('');
@@ -12,9 +12,9 @@ const StartScreen = ({ navigation }) => {
   
   {/* // Start page title */}
    <Text style={styles.title}>Chatty</Text>
-
 {/* // Start page content */}
-   <View style={styles.content}>  
+   {/* <View style={styles.content}>   */}
+   <KeyboardAvoidingView style={styles.content} behavior={Platform.OS === "ios"? "padding": null} >
      <TextInput
         style={styles.userInput}
         // value={username}
@@ -24,16 +24,15 @@ const StartScreen = ({ navigation }) => {
       <Text style={styles.text}>Choose a background color:</Text>
       <View style={styles.colorList}>
           {colors.map((color, index) => (
-            <TouchableOpacity key={index} style={[styles.box, { backgroundColor: color }, background === color && styles.selected,]} onPress={() => setBackground(color)} />
+            <TouchableOpacity key={index} style={[styles.box, { backgroundColor: color }, background === color && styles.selected,]} onPress={() => setBackground(color)} /> 
             ))}
      </View>
      {/* // Customisable button elements */}
       <TouchableOpacity style={styles.enterChatButton} onPress={() => navigation.navigate('ChatScreen', {name: username, color: background})}> 
        <Text style={styles.enterChatButtonText}>Enter Chat Room</Text>
       </TouchableOpacity>
-  
-     
-   </View>
+   {/* </View> */}
+   </KeyboardAvoidingView>
   </ImageBackground>
  );
 }

@@ -36,6 +36,7 @@ const ChatScreen = ({ route, navigation }) => {
 
  return (
    <View style={[styles.container, {backgroundColor: color}]}>
+
      <Text>Hello {username} !</Text>
      <View style={styles.container}>
         <GiftedChat
@@ -46,6 +47,7 @@ const ChatScreen = ({ route, navigation }) => {
           }}
           />
           {Platform.OS === 'android' ? <KeyboardAvoidingView behavior="height" /> : null }
+          {Platform.OS === "ios"? <KeyboardAvoidingView behavior="padding" />: null}
     </View>
    </View>
  );
