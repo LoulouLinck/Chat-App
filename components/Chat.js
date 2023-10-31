@@ -1,23 +1,27 @@
 import { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, KeyboardAvoidingView, Platform } from 'react-native';
+// Chat UI library & associated components
 import { GiftedChat, Bubble } from "react-native-gifted-chat";
 
 const ChatScreen = ({ route, navigation }) => {
+  // Sets chat screen title and color to users' input/choice in Start screen
     const username = route.params.name;
     const color = route.params.color;
-    // messages state initialization
+    // Messages state initialization
     const [messages, setMessages] = useState([]);
 
     useEffect(() => {
       navigation.setOptions({ title: username })
     // Msg w/ Gifted Chat follow format: ID, creation date, user object. User object requires: user ID, name, avatar.
     setMessages([
+      // System message
       {
         _id: 1,
         text: 'You\'ve entered the Chat Room',
         createdAt: new Date(),
         system: true,
       },
+      // User message
       {
         _id: 2,
         text: "Hello developer",
@@ -36,6 +40,7 @@ const ChatScreen = ({ route, navigation }) => {
     const onSend = (newMessages) => {
       setMessages(previousMessages => GiftedChat.append(previousMessages, newMessages))
     }
+    // UI customisation
     const renderBubble = (props) => {
       return <Bubble
         {...props}
@@ -57,12 +62,14 @@ const ChatScreen = ({ route, navigation }) => {
      <View style={styles.container}>
         <GiftedChat
           messages={messages}
+          // UI customisation
           renderBubble={renderBubble}
           onSend={messages => onSend(messages)}
           user={{
             _id: 1
           }}
           />
+          {/* // Fixes Android & iOs Keyboards appearance: not covering content */}
           {Platform.OS === 'android' ? <KeyboardAvoidingView behavior="height" /> : null }
           {Platform.OS === "ios"? <KeyboardAvoidingView behavior="padding" />: null}
     </View>

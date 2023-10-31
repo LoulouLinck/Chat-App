@@ -4,6 +4,7 @@ import { StyleSheet, View, Text, TextInput, TouchableOpacity, ImageBackground, K
 const StartScreen = ({ navigation }) => {
      const [username, setUsername] = useState('');
      const [background, setBackground] = useState('white');
+     // Colors list for user customisation
      const colors = ['#090C08', '#474056', '#8A95A5', '#B9C6AE'];
 
  return (
@@ -14,6 +15,7 @@ const StartScreen = ({ navigation }) => {
    <Text style={styles.title}>Chatty</Text>
 {/* // Start page content */}
    {/* <View style={styles.content}>   */}
+   {/* //Fixes iOs Keyboards appearance: not covering content */}
    <KeyboardAvoidingView style={styles.content} behavior={Platform.OS === "ios"? "padding": null} >
      <TextInput
         style={styles.userInput}
