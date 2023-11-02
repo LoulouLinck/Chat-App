@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, KeyboardAvoidingView, Platform } from 'react-native';
 // Chat UI library & associated components
 import { GiftedChat, Bubble } from "react-native-gifted-chat";
+import { collection, getDocs, addDoc, query, orderBy, onSnapshot } from "firebase/firestore";
 
 const ChatScreen = ({ route, navigation, db }) => {
   // Sets chat screen title and color to users' input/choice in Start screen
@@ -9,30 +10,29 @@ const ChatScreen = ({ route, navigation, db }) => {
     const color = route.params.color;
     // Messages state initialization
     const [messages, setMessages] = useState([]);
+    // Extract userID
+    const { userID } = route.params;
 
-    useEffect(() => {
-      navigation.setOptions({ title: username })
-    // Msg w/ Gifted Chat follow format: ID, creation date, user object. User object requires: user ID, name, avatar.
-    setMessages([
-      // System message
-      {
-        _id: 1,
-        text: 'You\'ve entered the Chat Room',
-        createdAt: new Date(),
-        system: true,
-      },
-      // User message
-      {
-        _id: 2,
-        text: "Hello developer",
-        createdAt: new Date(),
-        user: {
-          _id: 2,
-          name: "React Native",
-          avatar: "https://placeimg.com/140/140/any",
-        },
-      },
-    ]);
+
+  useEffect(() => {
+    // Set entered username in StartScreen as ChatScreen title
+    navigation.setOptions({ title: username })
+    // Query Firestore for messages, ordered by their creation date
+    const q = query(collection(db, "messages"), orderBy("createdAt", "desc"));
+   // Listens for real-time changes in messages collection
+    const unsubMessages = onSnapshot(q, (docs) => {
+      let newMessages = [];
+      docs.forEach(doc => {
+        newMessages.push({ id: doc.id, ...doc.data(), 
+          createdAt: new Date(doc.data().createdAt.toMillis())
+        })
+      });
+      setMessages(newMessages);
+    });
+    // Clean up code = unsubscribe Firestore listener
+    return () => {
+      if (unsubMessages) unsubMessages();
+    }
   }, []);
 
 // setter function setMessage() accepts callback function which 1st parameter: previousMessages = variable refers to latest value of state
@@ -66,7 +66,8 @@ const ChatScreen = ({ route, navigation, db }) => {
           renderBubble={renderBubble}
           onSend={messages => onSend(messages)}
           user={{
-            _id: 1
+            _id: userID,
+            // why not: 'uid: userID' as in exercise?
           }}
           />
           {/* // Fixes Android & iOs Keyboards appearance: not covering content */}
