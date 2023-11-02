@@ -2,8 +2,11 @@ import { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, KeyboardAvoidingView, Platform } from 'react-native';
 // Chat UI library & associated components
 import { GiftedChat, Bubble } from "react-native-gifted-chat";
+// Initialize connection for Firestore
+import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
 
-const ChatScreen = ({ route, navigation }) => {
+const ChatScreen = ({ route, navigation, db }) => {
   // Sets chat screen title and color to users' input/choice in Start screen
     const username = route.params.name;
     const color = route.params.color;
