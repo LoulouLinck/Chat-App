@@ -4,15 +4,16 @@ import { StyleSheet, View, Text, KeyboardAvoidingView, Platform } from 'react-na
 import { GiftedChat, Bubble } from "react-native-gifted-chat";
 import { collection, getDocs, addDoc, query, orderBy, onSnapshot } from "firebase/firestore";
 
+let unsubMessages;
+
 const ChatScreen = ({ route, navigation, db }) => {
   // Sets chat screen title and color to users' input/choice in Start screen
     const username = route.params.name;
-    const color = route.params.color;
+    // Extract color, userID
+    const  {color, userID} = route.params;
     // Messages state initialization
     const [messages, setMessages] = useState([]);
-    // Extract userID
-    const { userID } = route.params;
-
+  
 
   useEffect(() => {
     // Set entered username in StartScreen as ChatScreen title
@@ -33,12 +34,12 @@ const ChatScreen = ({ route, navigation, db }) => {
     return () => {
       if (unsubMessages) unsubMessages();
     }
-  }, []);
+  }, [`${messages}`]);
 
 // setter function setMessage() accepts callback function which 1st parameter: previousMessages = variable refers to latest value of state
     //appends the new msg to newMessages array: to original list of msg from previousMessages. Gets displayed in chat.
     const onSend = (newMessages) => {
-      setMessages(previousMessages => GiftedChat.append(previousMessages, newMessages))
+    addDoc(collection(db, "messages"), newMessages[0])
     }
     // UI customisation
     const renderBubble = (props) => {
@@ -68,6 +69,7 @@ const ChatScreen = ({ route, navigation, db }) => {
           user={{
             _id: userID,
             // why not: 'uid: userID' as in exercise?
+            name: username
           }}
           />
           {/* // Fixes Android & iOs Keyboards appearance: not covering content */}
