@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { StyleSheet, View, Text, TextInput, TouchableOpacity, ImageBackground, KeyboardAvoidingView, Platform } from 'react-native';
+import { StyleSheet, View, Text, Button, TextInput, TouchableOpacity, ImageBackground, KeyboardAvoidingView, Platform, Alert } from 'react-native';
 import { getAuth, signInAnonymously } from "firebase/auth";
 
 const StartScreen = ({ navigation }) => {
-     const [username, setUsername] = useState('');
+     const [name, setName] = useState('');
      const [background, setBackground] = useState('white');
      // Colors list for user customisation
      const colors = ['#090C08', '#474056', '#8A95A5', '#B9C6AE'];
@@ -17,9 +17,9 @@ const StartScreen = ({ navigation }) => {
           Alert.alert("Signed in Successfully!");
         })
         .catch((error) => {
-          Alert.alert("Unable to sign in, try later again.");
-        })
-    }
+          Alert.alert("Unable to sign in, try later again.", error);
+        });
+    };
 
  return (
   // Screen background image: must wrap whole content located inside
@@ -33,8 +33,8 @@ const StartScreen = ({ navigation }) => {
    <KeyboardAvoidingView style={styles.content} behavior={Platform.OS === "ios"? "padding": null} >
      <TextInput
         style={styles.userInput}
-        // value={username}
-        onChangeText={setUsername}
+        value={name}
+        onChangeText={setName}
         placeholder='Type your username here'
       />
       <Text style={styles.text}>Choose a background color:</Text>
