@@ -12,8 +12,8 @@ const StartScreen = ({ navigation }) => {
 
      const signInUser = () => {
       signInAnonymously(auth)
-        .then(result => { // or ChatScreen?
-          navigation.navigate("Chat", {userID: result.user.uid });
+        .then((result) => { // or ChatScreen?
+          navigation.navigate("ChatScreen", {userID: result.user.uid, name: name, color: background,});
           Alert.alert("Signed in Successfully!");
         })
         .catch((error) => {
@@ -44,7 +44,7 @@ const StartScreen = ({ navigation }) => {
             ))}
      </View>
      {/* // Customisable button elements */}
-      <TouchableOpacity style={styles.enterChatButton} onPress={() => navigation.navigate('ChatScreen', {name: username, color: background, signInUser})}> 
+      <TouchableOpacity style={styles.enterChatButton} onPress={signInUser}> 
        <Text style={styles.enterChatButtonText}>Enter Chat Room</Text>
       </TouchableOpacity>
    {/* </View> */}
