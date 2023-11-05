@@ -2,6 +2,8 @@ import { StyleSheet, Text, View } from 'react-native';
 // import react Navigation
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+//import NetInfo to know  users' current status of network connection
+import { useNetInfo }from '@react-native-community/netinfo';
 // import the screens
 import StartScreen from './components/Start';
 import ChatScreen from './components/Chat';
