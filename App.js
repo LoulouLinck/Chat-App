@@ -49,6 +49,7 @@ const App = () => {
     <NavigationContainer>
       <Stack.Navigator initialRouteName="StartScreen">
         <Stack.Screen name="Start" component={StartScreen} />
+        // Passes isConnected prop to Chat component
         <Stack.Screen name="ChatScreen">
          {props => <ChatScreen isConnected={connectionStatus.isConnected} db={db} {...props} />}
        </Stack.Screen>
