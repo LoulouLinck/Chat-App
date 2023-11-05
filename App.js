@@ -50,7 +50,7 @@ const App = () => {
       <Stack.Navigator initialRouteName="StartScreen">
         <Stack.Screen name="Start" component={StartScreen} />
         <Stack.Screen name="ChatScreen">
-         {props => <ChatScreen db={db} {...props} />}
+         {props => <ChatScreen isConnected={connectionStatus.isConnected} db={db} {...props} />}
        </Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>
