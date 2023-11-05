@@ -5,7 +5,7 @@ import { GiftedChat, Bubble } from "react-native-gifted-chat";
 import { collection, getDocs, addDoc, query, orderBy, onSnapshot } from "firebase/firestore";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const ChatScreen = ({ route, navigation, db }) => {
+const ChatScreen = ({ route, navigation, db, isConnected }) => {
     // Sets chat screen title and color to users' input/choice in Start screen
     // const username = route.params.name;
     // Extract color, userID
@@ -20,6 +20,7 @@ const ChatScreen = ({ route, navigation, db }) => {
     }, []);
 
   useEffect(() => {
+    if (isConnected === true) {
     // Query Firestore for messages, ordered by their creation date
     const q = query(collection(db, "messages"), orderBy("createdAt", "desc"));
    // Listens for real-time changes in messages collection
@@ -30,8 +31,10 @@ const ChatScreen = ({ route, navigation, db }) => {
           createdAt: new Date(doc.data().createdAt.toMillis())
         })
       });
+      cacheMessages(newMessages)
       setMessages(newMessages);
     });
+  } else loadCachedMessages();
     // Clean up code = unsubscribe Firestore listener
     return () => {
       if (unsubMessages) {
