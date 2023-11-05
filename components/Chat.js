@@ -44,6 +44,12 @@ const ChatScreen = ({ route, navigation, db, isConnected }) => {
     };
   }, []);
 
+  // If no connection: load cached messages from the local storage 
+  const loadCachedMessages = async () => {
+    const cachedMessages = await AsyncStorage.getItem("messages") || [];
+    setMessages(JSON.parse(cachedMessages));
+  };
+
 // setter function setMessage() accepts callback function which 1st parameter: previousMessages = variable refers to latest value of state
     //appends the new msg to newMessages array: to original list of msg from previousMessages. Gets displayed in chat.
     const onSend = (newMessages) => {
