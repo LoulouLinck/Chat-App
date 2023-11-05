@@ -3,7 +3,7 @@ import { StyleSheet, View, Text, KeyboardAvoidingView, Platform } from 'react-na
 // Chat UI library & associated components
 import { GiftedChat, Bubble } from "react-native-gifted-chat";
 import { collection, getDocs, addDoc, query, orderBy, onSnapshot } from "firebase/firestore";
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const ChatScreen = ({ route, navigation, db }) => {
     // Sets chat screen title and color to users' input/choice in Start screen
