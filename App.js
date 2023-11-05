@@ -10,7 +10,7 @@ import StartScreen from './components/Start';
 import ChatScreen from './components/Chat';
 
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
+import { getFirestore, disableNetwork, enableNetwork } from "firebase/firestore";
 
   // Create the navigator
   const Stack = createNativeStackNavigator();
@@ -22,7 +22,12 @@ const App = () => {
 
 // displays Alert popup if connection is lost
   useEffect(() => {
-    if (connectionStatus.isConnected === false) Alert.alert("Connection lost!")
+    if (connectionStatus.isConnected === false) {
+      Alert.alert("Connection lost!");
+      disableNetwork(db);
+    } else if (connectionStatus.isConnected === true) {
+      enableNetwork(db);
+    }
   }, [connectionStatus.isConnected]);
 
   const firebaseConfig = {
