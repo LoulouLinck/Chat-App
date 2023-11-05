@@ -9,15 +9,15 @@ import { useNetInfo }from '@react-native-community/netinfo';
 import StartScreen from './components/Start';
 import ChatScreen from './components/Chat';
 
-// Create the navigator
-const Stack = createNativeStackNavigator();
-
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 
+  // Create the navigator
+  const Stack = createNativeStackNavigator();
+
 const App = () => {
 
-// Defines a new state representing network connectivity status
+  // Defines a new state representing network connectivity status
   const connectionStatus = useNetInfo();
 
 // displays Alert popup if connection is lost
