@@ -15,6 +15,10 @@ import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 
 const App = () => {
+
+// Defines a new state representing network connectivity status
+  const connectionStatus = useNetInfo();
+
   const firebaseConfig = {
     apiKey: "AIzaSyDV8BKfIERy-ticWdQnoGGbH6yZmJ-ubFE",
     authDomain: "chatty-3791d.firebaseapp.com",
