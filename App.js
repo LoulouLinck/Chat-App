@@ -1,4 +1,5 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { useEffect } from "react";
+import { StyleSheet, Text, View, LogBox, Alert } from 'react-native';
 // import react Navigation
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -18,6 +19,11 @@ const App = () => {
 
 // Defines a new state representing network connectivity status
   const connectionStatus = useNetInfo();
+
+// displays Alert popup if connection is lost
+  useEffect(() => {
+    if (connectionStatus.isConnected === false) Alert.alert("Connection lost!")
+  }, [connectionStatus.isConnected]);
 
   const firebaseConfig = {
     apiKey: "AIzaSyDV8BKfIERy-ticWdQnoGGbH6yZmJ-ubFE",
