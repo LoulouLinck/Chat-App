@@ -50,6 +50,15 @@ let unsubMessages;
     };
   }, [isConnected]);
 
+  // If connection: fetch messages from Firestore db and cache messages in onSnapshot callback function
+  const cacheMessages = async (messagesToCache) => {
+    try {
+      await AsyncStorage.setItem("messages", JSON.stringify(messagesToCache));
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
   // If no connection: load cached messages from the local storage 
   const loadCachedMessages = async () => {
     const cachedMessages = await AsyncStorage.getItem("messages") || [];
