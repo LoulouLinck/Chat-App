@@ -20,11 +20,12 @@ const ChatScreen = ({ route, navigation, db, isConnected }) => {
     }, []);
 
   useEffect(() => {
+    let unsubMessages;
     if (isConnected === true) {
     // Query Firestore for messages, ordered by their creation date
     const q = query(collection(db, "messages"), orderBy("createdAt", "desc"));
    // Listens for real-time changes in messages collection
-    const unsubMessages = onSnapshot(q, (docs) => {
+    unsubMessages = onSnapshot(q, (docs) => {
       let newMessages = [];
       docs.forEach(doc => {
         newMessages.push({ _id: doc.id, ...doc.data(), 
