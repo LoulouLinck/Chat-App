@@ -42,7 +42,7 @@ const ChatScreen = ({ route, navigation, db, isConnected }) => {
         unsubMessages();
       }
     };
-  }, []);
+  }, [isConnected]);
 
   // If no connection: load cached messages from the local storage 
   const loadCachedMessages = async () => {
