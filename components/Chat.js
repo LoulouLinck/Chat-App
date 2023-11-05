@@ -19,9 +19,15 @@ const ChatScreen = ({ route, navigation, db, isConnected }) => {
       navigation.setOptions({ title: name });
     }, []);
 
+let unsubMessages;
+
   useEffect(() => {
-    let unsubMessages;
     if (isConnected === true) {
+      // unregister current onSnapshot() listener to avoid registering multiple listeners when
+      // useEffect code is re-executed.
+      if (unsubMessages) unsubMessages();
+      unsubMessages = null;
+
     // Query Firestore for messages, ordered by their creation date
     const q = query(collection(db, "messages"), orderBy("createdAt", "desc"));
    // Listens for real-time changes in messages collection
