@@ -99,6 +99,7 @@ let unsubMessages;
           messages={messages}
           // UI customisation
           renderBubble={renderBubble}
+          renderInputToolbar={renderInputToolbar}
           onSend={(messages) => onSend(messages)}
           user={{
             _id: userID,
