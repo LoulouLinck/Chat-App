@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, KeyboardAvoidingView, Platform } from 'react-native';
 // Chat UI library & associated components
-import { GiftedChat, Bubble } from "react-native-gifted-chat";
+import { GiftedChat, Bubble, InputToolbar } from "react-native-gifted-chat";
 import { collection, getDocs, addDoc, query, orderBy, onSnapshot } from "firebase/firestore";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -69,7 +69,7 @@ let unsubMessages;
     //appends the new msg to newMessages array: to original list of msg from previousMessages. Gets displayed in chat.
     const onSend = (newMessages) => {
     addDoc(collection(db, "messages"), newMessages[0]);
-    }
+    };
     // UI customisation
     const renderBubble = (props) => {
       return <Bubble
@@ -84,6 +84,11 @@ let unsubMessages;
         }}
       />
     }
+
+    const renderInputToolbar = (props) => {
+      if (isConnected) return <InputToolbar {...props} />;
+      else return null;
+    };
 
  return (
    <View style={[styles.container, {backgroundColor: color}]}>
