@@ -5,6 +5,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 //import NetInfo to know  users' current status of network connection
 import { useNetInfo }from '@react-native-community/netinfo';
+// Import ImagePicker Expo package
+import * as ImagePicker from 'expo-image-picker';
 // import the screens
 import StartScreen from './components/Start';
 import ChatScreen from './components/Chat';
