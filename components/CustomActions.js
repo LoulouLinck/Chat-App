@@ -3,9 +3,16 @@ import MapView from 'react-native-maps';
 import { TouchableOpacity } from "react-native";
 
 const CustomActions = () => {
+import { TouchableOpacity, StyleSheet, Text, View, Alert } from "react-native";
+
+const CustomActions = ( wrapperStyle, iconTextStyle ) => {
+    const onActionPress = () => {}
 
   return (
-    <TouchableOpacity style={styles.container} 
+    <TouchableOpacity style={styles.container} onPress={onActionPress}>
+        <View style={[styles.wrapper, wrapperStyle]}>
+            <Text style={[styles.iconText, iconTextStyle]}>+</Text>
+        </View>
     </TouchableOpacity>
   );
 }
