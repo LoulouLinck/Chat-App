@@ -5,6 +5,8 @@ import { GiftedChat, Bubble, InputToolbar } from "react-native-gifted-chat";
 import { collection, getDocs, addDoc, query, orderBy, onSnapshot } from "firebase/firestore";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+import CustomActions from './CustomActions';
+
 const ChatScreen = ({ route, navigation, db, isConnected }) => {
     // Sets chat screen title and color to users' input/choice in Start screen
     // const username = route.params.name;
@@ -83,11 +85,16 @@ let unsubMessages;
           }
         }}
       />
-    }
+    };
 
     const renderInputToolbar = (props) => {
       if (isConnected) return <InputToolbar {...props} />;
       else return null;
+    };
+
+    // component for custom actions
+    const renderCustomActions = (props) => {
+      return <CustomActions {...props} />;
     };
 
  return (
@@ -100,6 +107,7 @@ let unsubMessages;
           // UI customisation
           renderBubble={renderBubble}
           renderInputToolbar={renderInputToolbar}
+          renderActions={renderCustomActions}
           onSend={(messages) => onSend(messages)}
           user={{
             _id: userID,
