@@ -4,9 +4,12 @@ import { TouchableOpacity } from "react-native";
 
 const CustomActions = () => {
 import { TouchableOpacity, StyleSheet, Text, View, Alert } from "react-native";
+import { useActionSheet } from '@expo/react-native-action-sheet';
 
 const CustomActions = ( wrapperStyle, iconTextStyle ) => {
-    const onActionPress = () => {}
+    const actionSheet = useActionSheet();
+    const onActionPress = () => {const options = ['Choose From Library', 'Take Picture', 'Send Location', 'Cancel'];
+    const cancelButtonIndex = options.length - 1;}
 
   return (
     <TouchableOpacity style={styles.container} onPress={onActionPress}>
