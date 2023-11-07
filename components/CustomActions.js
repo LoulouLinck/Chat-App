@@ -1,5 +1,17 @@
 import * as Location from 'expo-location';
 import MapView from 'react-native-maps';
+import { TouchableOpacity } from "react-native";
+
+const CustomActions = () => {
+
+  return (
+    <TouchableOpacity style={styles.container} 
+    </TouchableOpacity>
+  );
+}
+
+export default CustomActions;
+
     const [location, setLocation] = useState(null);
 
     // Lets the user pick an image from the library
