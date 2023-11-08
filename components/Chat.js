@@ -4,6 +4,7 @@ import { StyleSheet, View, Text, KeyboardAvoidingView, Platform } from 'react-na
 import { GiftedChat, Bubble, InputToolbar } from "react-native-gifted-chat";
 import { collection, getDocs, addDoc, query, orderBy, onSnapshot } from "firebase/firestore";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import MapView from 'react-native-maps';
 
 import CustomActions from './CustomActions';
 
@@ -96,6 +97,27 @@ let unsubMessages;
     const renderCustomActions = (props) => {
       return <CustomActions {...props} />;
     };
+// component rendering MapView 
+    const renderCustomView = (props) => {
+      const {currentMessage} = props;
+      if (currentMessage.location) {
+        return (
+            <MapView
+              style={{width: 150,
+                height: 100,
+                borderRadius: 13,
+                margin: 3}}
+              region={{
+                latitude: currentMessage.location.latitude,
+                longitude: currentMessage.location.longitude,
+                latitudeDelta: 0.0922,
+                longitudeDelta: 0.0421,
+              }}
+            />
+        );
+      }
+      return null;
+    }
 
  return (
    <View style={[styles.container, {backgroundColor: color}]}>
@@ -108,6 +130,7 @@ let unsubMessages;
           renderBubble={renderBubble}
           renderInputToolbar={renderInputToolbar}
           renderActions={renderCustomActions}
+          renderCustomView={renderCustomView}
           onSend={(messages) => onSend(messages)}
           user={{
             _id: userID,
