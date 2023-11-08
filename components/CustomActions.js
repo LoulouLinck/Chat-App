@@ -6,12 +6,11 @@ import MapView from 'react-native-maps';
 import { TouchableOpacity, StyleSheet, Text, View, Alert } from "react-native";
 import { useActionSheet } from '@expo/react-native-action-sheet';
 
-const CustomActions = ( wrapperStyle, iconTextStyle, onSend  ) => {
+const CustomActions = ( wrapperStyle, iconTextStyle, onSend ) => {
     const actionSheet = useActionSheet();
     const onActionPress = () => {
         const options = ['Choose From Library', 'Take Picture', 'Send Location', 'Cancel'];
     const cancelButtonIndex = options.length - 1;
-
     actionSheet.showActionSheetWithOptions(
         { 
         options,
@@ -33,20 +32,44 @@ const CustomActions = ( wrapperStyle, iconTextStyle, onSend  ) => {
     );
 }
 
-const getLocation = async () => {
-    let permissions = await Location.requestForegroundPermissionsAsync();
-    if (permissions?.granted) {
-      const location = await Location.getCurrentPositionAsync({});
-      if (location) {
-        onSend({
-          location: {
-            longitude: location.coords.longitude,
-            latitude: location.coords.latitude,
-          },
-        });
-      } else Alert.alert("Error occurred while fetching location");
-    } else Alert.alert("Permissions haven't been granted.");
-  }
+    // Lets the user pick an image from the library
+    const pickImage = async () => {
+        let permissions = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (permissions?.granted) {
+           let result = await ImagePicker.launchImageLibraryAsync();
+          if (!result.canceled) setImage(result.assets[0]);
+          else setImage(null)
+        }
+    }
+
+    // lets user pick an image from library
+    const takePhoto = async () => {
+        let permissions = await ImagePicker.requestCameraPermissionsAsync();
+    
+        if (permissions?.granted) {
+          let result = await ImagePicker.launchCameraAsync();
+    
+         if (!result.canceled) setImage(result.assets[0]);
+        else setImage(null)
+        }
+    }
+
+    // creates geLocation method
+    const getLocation = async () => {
+        let permissions = await Location.requestForegroundPermissionsAsync();
+        if (permissions?.granted) {
+        const location = await Location.getCurrentPositionAsync({});
+        if (location) {
+            onSend({
+            location: {
+                longitude: location.coords.longitude,
+                latitude: location.coords.latitude,
+            },
+            });
+        } else Alert.alert("Error occurred while fetching location");
+        } else Alert.alert("Permissions haven't been granted.");
+    }
+
   return (
     <TouchableOpacity style={styles.container} onPress={onActionPress}>
         <View style={[styles.wrapper, wrapperStyle]}>
@@ -79,43 +102,4 @@ const styles = StyleSheet.create({
   });
 
 export default CustomActions;
-
-    const [location, setLocation] = useState(null);
-
-    // Lets the user pick an image from the library
-    const pickImage = async () => {
-        let permissions = await ImagePicker.requestMediaLibraryPermissionsAsync();
-    
-        if (permissions?.granted) {
-           let result = await ImagePicker.launchImageLibraryAsync();
-    
-          if (!result.canceled) setImage(result.assets[0]);
-          else setImage(null)
-        }
-    }
-    // lets user pick an image from library
-    const takePhoto = async () => {
-        let permissions = await ImagePicker.requestCameraPermissionsAsync();
-    
-        if (permissions?.granted) {
-          let result = await ImagePicker.launchCameraAsync();
-    
-         if (!result.canceled) setImage(result.assets[0]);
-        else setImage(null)
-        }
-    }
-
-    // creates geLocation method
-    const getLocation = async () => {
-        let permissions = await Location.requestForegroundPermissionsAsync();
-    
-        if (permissions?.granted) {
-        const location = await Location.getCurrentPositionAsync({});
-        setLocation(location);
-        } else {
-        Alert.alert("Permissions to read location aren't granted");
-        }
-    }
-    
-  
   
