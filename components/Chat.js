@@ -5,7 +5,6 @@ import { GiftedChat, Bubble, InputToolbar } from "react-native-gifted-chat";
 import { collection, getDocs, addDoc, query, orderBy, onSnapshot } from "firebase/firestore";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import MapView from 'react-native-maps';
-
 import CustomActions from './CustomActions';
 
 const ChatScreen = ({ route, navigation, db, isConnected }) => {
@@ -89,13 +88,13 @@ let unsubMessages;
     };
 
     const renderInputToolbar = (props) => {
-      if (isConnected) return <InputToolbar {...props} />;
+      if (isConnected === true) return <InputToolbar {...props} />;
       else return null;
     };
 
     // component for custom actions
     const renderCustomActions = (props) => {
-      return <CustomActions {...props} />;
+      return <CustomActions onSend={onSend} {...props} />;
     };
 // component rendering MapView 
     const renderCustomView = (props) => {
