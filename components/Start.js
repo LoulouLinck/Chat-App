@@ -3,12 +3,13 @@ import { StyleSheet, View, Text, Button, TextInput, TouchableOpacity, ImageBackg
 import { getAuth, signInAnonymously } from "firebase/auth";
 
 const StartScreen = ({ navigation }) => {
+  const auth = getAuth();
      const [name, setName] = useState('');
      const [background, setBackground] = useState('white');
      // Colors list for user customisation
      const colors = ['#090C08', '#474056', '#8A95A5', '#B9C6AE'];
      // initialize Firebase authentication handler
-     const auth = getAuth();
+     
 
      const signInUser = () => {
       signInAnonymously(auth)

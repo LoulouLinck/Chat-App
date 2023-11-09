@@ -1,12 +1,11 @@
+import { TouchableOpacity, StyleSheet, Text, View, Alert } from "react-native";
+import { useActionSheet } from '@expo/react-native-action-sheet';
 
 import * as ImagePicker from 'expo-image-picker';
 import * as Location from 'expo-location';
-
-import { TouchableOpacity, StyleSheet, Text, View, Alert } from "react-native";
-import { useActionSheet } from '@expo/react-native-action-sheet';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 
-const CustomActions = ( wrapperStyle, iconTextStyle, onSend, storage, userID ) => {
+const CustomActions = ({ wrapperStyle, iconTextStyle, onSend, storage, userID }) => {
     const actionSheet = useActionSheet();
     const onActionPress = () => {
         const options = ['Choose From Library', 'Take Picture', 'Send Location', 'Cancel'];
@@ -32,7 +31,7 @@ const CustomActions = ( wrapperStyle, iconTextStyle, onSend, storage, userID ) =
     );
 }
 
-//
+// gets file name from URI
 const generateReference = (uri) => {
   const timeStamp = (new Date()).getTime();
   const imageName = uri.split("/")[uri.split("/").length - 1];
@@ -50,7 +49,7 @@ const generateReference = (uri) => {
         onSend({ image: imageURL })
       });
     }
-    
+
    // Lets the user pick an image from the library
     const pickImage = async () => {
       let permissions = await ImagePicker.requestMediaLibraryPermissionsAsync();

@@ -15,13 +15,12 @@ const ChatScreen = ({ route, navigation, db, isConnected, storage }) => {
     // Messages state initialization
     const [messages, setMessages] = useState([]);
  
- 
+ let unsubMessages;
+
     // Set entered username in StartScreen as ChatScreen title
     useEffect(() => {
       navigation.setOptions({ title: name });
     }, []);
-
-let unsubMessages;
 
   useEffect(() => {
     if (isConnected === true) {
@@ -35,7 +34,7 @@ let unsubMessages;
    // Listens for real-time changes in messages collection
     unsubMessages = onSnapshot(q, (docs) => {
       let newMessages = [];
-      docs.forEach(doc => {
+      docs.forEach((doc) => {
         newMessages.push({ _id: doc.id, ...doc.data(), 
           createdAt: new Date(doc.data().createdAt.toMillis())
         })
@@ -94,7 +93,7 @@ let unsubMessages;
 
     // component for custom actions
     const renderCustomActions = (props) => {
-      return <CustomActions storage={storage} {...props} />;
+      return <CustomActions storage={storage} userID={userID} {...props} />;
     };
 // component rendering MapView 
     const renderCustomView = (props) => {
@@ -115,8 +114,7 @@ let unsubMessages;
             />
         );
       }
-      return null;
-    }
+    };
 
  return (
    <View style={[styles.container, {backgroundColor: color}]}>
