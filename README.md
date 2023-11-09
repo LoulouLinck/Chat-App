@@ -1,6 +1,6 @@
 # 📖 # Cityvent
 
-> Chatty is a user-friendly mobile chat app built React Native offering a smooth experience.
+> Chatty is a user-friendly mobile chat app built React Native offering a smooth messaging experience together with the possiblility to chare images and location.
 
 ## Objective
 Create a serverless, progressive web application (PWA) in React following the test-driven development (TDD) approach, integrating with Google Calendar API to fetch and showcase upcoming events.
@@ -9,6 +9,13 @@ Create a serverless, progressive web application (PWA) in React following the te
 ## 🛠 Built With
 
 - React Native
+- Expo (toolchain for building native apps in JavaScript)
+- React Native Gifted Chat library
+- Google Firestore DB
+- Google Firebase Authentication
+- AsyncStorage caching for offline use
+- Firebase Cloud Storage (for storing images)
+- Expo ImagePicker & MediaLibrary for communication features
 
 ### Key Features 
  
@@ -36,9 +43,44 @@ Page 2
 - The chat interface and functionality must be created using the Gifted Chat library.
 - The app’s codebase must contain comments.
 
-## Credits
+## Getting Started
+### Setting up your Environment
+Clone [repository](https://github.com/LoulouLinck/Chat-App) 
 
-<!-- [Flavicon](https://) was used for logos  -->
+```npm install - expo-cli Install Expo```
+
+Install All Required Packages
+
+```Navigate to the root folder of the project and run 
+npx expo start or npm start Start Expo
+```
+
+
+### Setting up Google Firebase database
+Firebase link -> (https://firebase.google.com/)
+
+Sign-up or sign in to [Firebase](https://firebase.google.com/) and add a new project
+Navigate to 'Build' > 'Firestore Database': create a new database in production mode
+Navigate to 'Project Settings' > 'General' > 'Your apps' and select the web app option symbol (</>) and follow the instruction to create a Firebase web app.
+Install firebase to add firebase connection into your project directory: `npm install firebase`
+Copy the Firebase Config from the project setting tab and paste into you App.js file
+Navigate to the rules tab in the console. To allow read and write access to the database, change the code: `allow read, write: if false;` to: `allow read, write: if true;`. Click publish
+
+
+## Packages Needed
+Packages to install:
+
+    `npm install --save @react-navigation/native @react-navigation/native-stack`
+    `expo install react-native-screens react-native-safe-area-context`
+    `npm install react-native-gifted-chat --save`
+    `npm install firebase@9.13.0 --save`
+    `expo install @react-native-async-storage/async-storage`
+    `expo install @react-native-community/netinfo`
+    `expo install expo-image-picker`
+    `expo install expo-location`
+    `expo install react-native-maps`
+
+## Credits
 
 <p align="right"><a href="#readme-top">back to top</a></p>
 
