@@ -32,38 +32,36 @@ const CustomActions = ( wrapperStyle, iconTextStyle, onSend, storage, userID ) =
     );
 }
 
+//
 const generateReference = (uri) => {
   const timeStamp = (new Date()).getTime();
   const imageName = uri.split("/")[uri.split("/").length - 1];
   return `${userID}-${timeStamp}-${imageName}`;
 }
 
-    // Lets the user pick an image from the library
+
+    const uploadAndSendImage = async (imageURI) => {
+      const uniqueRefString = generateReference(imageURI);
+      const newUploadRef = ref(storage, uniqueRefString);
+      const response = await fetch(imageURI);
+      const blob = await response.blob();
+      uploadBytes(newUploadRef, blob).then(async (snapshot) => {
+        const imageURL = await getDownloadURL(snapshot.ref)
+        onSend({ image: imageURL })
+      });
+    }
+    
+   // Lets the user pick an image from the library
     const pickImage = async () => {
-        let permissions = await ImagePicker.requestMediaLibraryPermissionsAsync();
-        if (permissions?.granted) {
-          let result = await ImagePicker.launchImageLibraryAsync();
-      if (!result.canceled) {
-            // Convert this content into a blob for Firebase storage
-            const imageURI = result.assets[0].uri;
-            const uniqueRefString = generateReference(imageURI);
-            const response = await fetch(imageURI);
-            const blob = await response.blob();
-            // Prepare a reference for file to upload on Storage Cloud
-            const newUploadRef = ref(storage, uniqueRefString);
-            // Upload image file blob using Firebase Storage method 
-        uploadBytes(newUploadRef, blob).then(async (snapshot) => {
-          console.log('File has been uploaded successfully');
-          const imageURL = await getDownloadURL(snapshot.ref)
-          onSend({ image: imageURL })
-        }) 
-      
-          }
-          else Alert.alert("Permissions haven't been granted.");
-        }
+      let permissions = await ImagePicker.requestMediaLibraryPermissionsAsync();
+      if (permissions?.granted) {
+        let result = await ImagePicker.launchImageLibraryAsync();
+        if (!result.canceled) await uploadAndSendImage(result.assets[0].uri);
+        else Alert.alert("Permissions haven't been granted.");
+      }
     }
 
-    // lets user pick an image from library
+    // lets user take a picture
     const takePhoto = async () => {
         let permissions = await ImagePicker.requestCameraPermissionsAsync();
         if (permissions?.granted) {
