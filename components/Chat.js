@@ -7,7 +7,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import MapView from 'react-native-maps';
 import CustomActions from './CustomActions';
 
-const ChatScreen = ({ route, navigation, db, isConnected }) => {
+const ChatScreen = ({ route, navigation, db, isConnected, storage }) => {
     // Sets chat screen title and color to users' input/choice in Start screen
     // const username = route.params.name;
     // Extract color, userID

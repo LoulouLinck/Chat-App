@@ -46,13 +46,16 @@ const generateReference = (uri) => {
       if (!result.canceled) {
             // Convert this content into a blob for Firebase storage
             const imageURI = result.assets[0].uri;
+            const uniqueRefString = generateReference(imageURI);
             const response = await fetch(imageURI);
             const blob = await response.blob();
             // Prepare a reference for file to upload on Storage Cloud
-            const newUploadRef = ref(storage, 'image123');
+            const newUploadRef = ref(storage, uniqueRefString);
             // Upload image file blob using Firebase Storage method 
         uploadBytes(newUploadRef, blob).then(async (snapshot) => {
           console.log('File has been uploaded successfully');
+          const imageURL = await getDownloadURL(snapshot.ref)
+          onSend({ image: imageURL })
         }) 
       
           }
@@ -63,12 +66,10 @@ const generateReference = (uri) => {
     // lets user pick an image from library
     const takePhoto = async () => {
         let permissions = await ImagePicker.requestCameraPermissionsAsync();
-    
         if (permissions?.granted) {
           let result = await ImagePicker.launchCameraAsync();
-    
-         if (!result.canceled) setImage(result.assets[0]);
-        else setImage(null)
+         if (!result.canceled) await uploadAndSendImage(result.assets[0].uri);
+         else Alert.alert("Permissions haven't been granted.");
         }
     }
 
