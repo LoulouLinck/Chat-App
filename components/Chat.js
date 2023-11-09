@@ -94,7 +94,7 @@ let unsubMessages;
 
     // component for custom actions
     const renderCustomActions = (props) => {
-      return <CustomActions onSend={onSend} {...props} />;
+      return <CustomActions storage={storage} {...props} />;
     };
 // component rendering MapView 
     const renderCustomView = (props) => {

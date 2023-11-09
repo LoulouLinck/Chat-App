@@ -13,6 +13,7 @@ import ChatScreen from './components/Chat';
 
 import { initializeApp } from "firebase/app";
 import { getFirestore, disableNetwork, enableNetwork } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
 
   // Create the navigator
   const Stack = createNativeStackNavigator();
@@ -46,6 +47,8 @@ const App = () => {
 
   // Initialize Cloud Firestore and get a reference to the service
   const db = getFirestore(app);
+  // Initialise the storage handler 
+  const storage = getStorage(app);
 
   return (
     <NavigationContainer>
@@ -53,7 +56,7 @@ const App = () => {
         <Stack.Screen name="Start" component={StartScreen} />
         {/* // Passes isConnected prop to Chat component */}
         <Stack.Screen name="ChatScreen">
-         {(props) => (<ChatScreen isConnected={connectionStatus.isConnected} db={db} {...props} />)}
+         {(props) => (<ChatScreen isConnected={connectionStatus.isConnected} db={db} storage={storage} {...props} />)}
        </Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>
