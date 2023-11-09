@@ -5,7 +5,7 @@ import * as Location from 'expo-location';
 import { TouchableOpacity, StyleSheet, Text, View, Alert } from "react-native";
 import { useActionSheet } from '@expo/react-native-action-sheet';
 
-const CustomActions = ( wrapperStyle, iconTextStyle, onSend ) => {
+const CustomActions = ( wrapperStyle, iconTextStyle, onSend, storage ) => {
     const actionSheet = useActionSheet();
     const onActionPress = () => {
         const options = ['Choose From Library', 'Take Picture', 'Send Location', 'Cancel'];
@@ -35,10 +35,19 @@ const CustomActions = ( wrapperStyle, iconTextStyle, onSend ) => {
     const pickImage = async () => {
         let permissions = await ImagePicker.requestMediaLibraryPermissionsAsync();
         if (permissions?.granted) {
-            // convert this content into a blob for Firebase storage
+          let result = await ImagePicker.launchImageLibraryAsync();
+      if (!result.canceled) {
+            // Convert this content into a blob for Firebase storage
             const imageURI = result.assets[0].uri;
             const response = await fetch(imageURI);
             const blob = await response.blob();
+            // Prepare a reference for file to upload on Storage Cloud
+            const newUploadRef = ref(storage, 'image123');
+            // Upload image file blob using Firebase Storage method 
+        uploadBytes(newUploadRef, blob).then(async (snapshot) => {
+          console.log('File has been uploaded successfully');
+        }) 
+      
           }
           else Alert.alert("Permissions haven't been granted.");
         }
