@@ -1,6 +1,7 @@
 # 📖 # Cityvent
 
 > Chatty is a user-friendly mobile chat app built React Native offering a smooth messaging experience together with the possiblility to chare images and location.
+![Screenshot Chat-App](/assets/Screenshot_Chat-App.png)
 
 ## Objective
 Create a serverless, progressive web application (PWA) in React following the test-driven development (TDD) approach, integrating with Google Calendar API to fetch and showcase upcoming events.
