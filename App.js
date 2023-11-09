@@ -1,3 +1,7 @@
+import { initializeApp } from "firebase/app";
+import { getFirestore, disableNetwork, enableNetwork } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
+
 import { useEffect } from "react";
 import { StyleSheet, Text, View, LogBox, Alert } from 'react-native';
 // import react Navigation
@@ -11,12 +15,26 @@ import * as ImagePicker from 'expo-image-picker';
 import StartScreen from './components/Start';
 import ChatScreen from './components/Chat';
 
-import { initializeApp } from "firebase/app";
-import { getFirestore, disableNetwork, enableNetwork } from "firebase/firestore";
-import { getStorage } from "firebase/storage";
+ const firebaseConfig = {
+    apiKey: "AIzaSyDV8BKfIERy-ticWdQnoGGbH6yZmJ-ubFE",
+    authDomain: "chatty-3791d.firebaseapp.com",
+    projectId: "chatty-3791d",
+    storageBucket: "chatty-3791d.appspot.com",
+    messagingSenderId: "534744690193",
+    appId: "1:534744690193:web:15b60f6a6f847196c40bb0"
+  };
 
+// Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+
+  // Initialize Cloud Firestore and get a reference to the service
+  const db = getFirestore(app);
+  // Initialise the storage handler 
+  const storage = getStorage(app);
   // Create the navigator
   const Stack = createNativeStackNavigator();
+
+  LogBox.ignoreLogs(["AsyncStorage has been extracted from"]);
 
 const App = () => {
 
@@ -32,23 +50,6 @@ const App = () => {
       enableNetwork(db);
     }
   }, [connectionStatus.isConnected]);
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyDV8BKfIERy-ticWdQnoGGbH6yZmJ-ubFE",
-    authDomain: "chatty-3791d.firebaseapp.com",
-    projectId: "chatty-3791d",
-    storageBucket: "chatty-3791d.appspot.com",
-    messagingSenderId: "534744690193",
-    appId: "1:534744690193:web:15b60f6a6f847196c40bb0"
-  };
-  
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-
-  // Initialize Cloud Firestore and get a reference to the service
-  const db = getFirestore(app);
-  // Initialise the storage handler 
-  const storage = getStorage(app);
 
   return (
     <NavigationContainer>
