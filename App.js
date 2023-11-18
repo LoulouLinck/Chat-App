@@ -1,3 +1,6 @@
+import 'dotenv/config';
+require('dotenv').config()
+
 import { initializeApp } from "firebase/app";
 import { getFirestore, disableNetwork, enableNetwork } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
@@ -16,12 +19,12 @@ import StartScreen from './components/Start';
 import ChatScreen from './components/Chat';
 
  const firebaseConfig = {
-    apiKey: "AIzaSyDV8BKfIERy-ticWdQnoGGbH6yZmJ-ubFE",
-    authDomain: "chatty-3791d.firebaseapp.com",
-    projectId: "chatty-3791d",
-    storageBucket: "chatty-3791d.appspot.com",
-    messagingSenderId: "534744690193",
-    appId: "1:534744690193:web:15b60f6a6f847196c40bb0"
+    apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+    authDomain: process.env.REACT_APP_FIREBASE_AUTHDOMAIN,
+    projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+    storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+    appId: process.env.REACT_APP_FIREBASE_APP_ID
   };
 
 // Initialize Firebase
